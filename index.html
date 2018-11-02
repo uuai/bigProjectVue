@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" href="css/animate.css"/>
+    <link rel="stylesheet" href="css/components.css">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style type="text/css">
+        .el-collapse-item__header {
+            box-sizing: border-box;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app" class="box">
+    <div class="left-contents">
+        <div class="operate-navs">
+            <div  class="operate-navs-inner flex">
+                <i class="layui-icon">&#xe621;</i>
+                <span>页面管理</span>
+            </div>
+            <div class="operate-navs-inner flex cheaka">
+                <i class="layui-icon">&#xe857;</i>
+                <span>组件库</span>
+            </div>
+        </div>
+        <div class="nav-component">
+            <div @click="addText(1)" class="nav-component-inner" :class="types==1?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>文本</span>
+            </div>
+            <div @click="addTitle(2)" class="nav-component-inner" :class="types==2?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>标题</span>
+            </div>
+            <div @click="addSwiper(3)" class="nav-component-inner" :class="types==3?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>轮播</span>
+            </div>
+            <div @click="addNav(4)" class="nav-component-inner" :class="types==4?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>图文导航</span>
+            </div>
+            <div @click="addNotice(5)" class="nav-component-inner" :class="types==5?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>公告</span>
+            </div>
+            <div @click="addlists(6)" class="nav-component-inner" :class="types==6?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>列表</span>
+            </div>
+            <div @click="addSeckill(7)" class="nav-component-inner" :class="types==7?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>秒杀</span>
+            </div>
+            <div @click="addSearch(8)" class="nav-component-inner" :class="types==8?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>搜索</span>
+            </div>
+            <div @click="addImgs(9)" class="nav-component-inner" :class="types==9?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>图片列表</span>
+            </div>
+            <div @click="addCoupon(10)" class="nav-component-inner" :class="types==10?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>优惠券</span>
+            </div>
+            <div @click="addShopInfo(11)" class="nav-component-inner" :class="types==11?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>店铺信息</span>
+            </div>
+            <div @click="addEnterShop(12)" class="nav-component-inner" :class="types==12?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>进入店铺</span>
+            </div>
+            <div @click="addPhotoads(13)" class="nav-component-inner" :class="types==13?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>魔方</span>
+            </div>
+            <div @click="isSuspension && addSuspension(14)" class="nav-component-inner" :class="types==14?'navActive':''">
+                <i class="layui-icon">&#xe61f;</i>
+                <span>悬浮窗</span>
+            </div>
+        </div>
+    </div>
+    <div class="middle-content">
+        <div class="middle-content-title">
+            <span>我的应用</span>
+            <i class="layui-icon">&#xe674;</i>
+            <div class="back-stage-management">后台管理</div>
+        </div>
+        <div class="middle-content-phone">
+            <div class="phone-title">
+                <div style="box-sizing: border-box;padding-left: 5px;">
+                    <i class="layui-icon">&#xe603;</i>
+                </div>
+                <div class="phone-title-text">首页</div>
+                <div style="box-sizing: border-box;padding-right: 10px;display: flex;justify-content: flex-end;">
+                    <div class="phone-title-share">
+                        <div class="phone-title-share-port">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div style="width: 1px;height: 15px;background: white;"></div>
+                        <div class="phone-title-share-circle">
+                            <div class="phone-title-share-circle-inner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 中间部分 -->
+            <div class="phone-inner">
+                <div v-show="temparr.length<=0" class="phone-inner-add">添加组件</div>
+                <template v-for="(item,index) in temparr">
+                    <!--文本-->
+                    <uuai-text v-if="item.name=='uuai-text'" :types="1" @edittext="changeText" active-names="1"
+                               :index="index" :text-index="tempid" :is-radio="item.textRadio" :text-val="item.textVal"
+                               :bg="item.textBg" :font-color="item.fontColor">
+                    </uuai-text>
+                    <!--标题-->
+                    <uuai-title v-if="item.name=='uuai-title'" :types="2" @edittitle="titleChange" active-names="2"
+                                :index="index" :title-index="tempid" :title="item.title"
+                                :title-radio="item.titleRadio" :see-more="item.seeMore">
+                    </uuai-title>
+                    <!--轮播-->
+                    <uuai-carousel v-if="item.name=='uuai-carousel'" :types="3" @editcarousel="changeCarousel"
+                                   active-names="3"
+                                   :index="index" :interval-index="tempid" :carousel="item.carousel"
+                                   :autoplay="item.auto"
+                                   :interval="item.interval">
+                    </uuai-carousel>
+                    <!--图文导航-->
+                    <uuai-nav v-if="item.name=='uuai-nav'" :types="4" @editnav="changeNav" active-names="4"
+                              :index="index" :nav-index="tempid" :nav-arr="item.nav"
+                              :nav-src="item.imageUrl" :nav-text="item.navText">
+                    </uuai-nav>
+                    <!--公告-->
+                    <uuai-notice v-if="item.name=='uuai-notice'" :types="5" @editnotice="changeNotice" active-names="5"
+                                 :index="index" :notice-index="tempid" :notice="item.notice"
+                                 :notice-radio="item.noticeRadio">
+                    </uuai-notice>
+                    <!--列表-->
+                    <lists v-if="item.name=='lists'" :types="6" @editlist='changeIist' active-names="6"
+                           :lists-index='tempid'
+                           :index="index" :lists-radio='item.listsRadio' :lists-value="item.listsValue"
+                           :lists-price="item.listsPrice"
+                           :lists-cart="item.listsCart">
+                    </lists>
+                    <!--秒杀-->
+                    <seckill v-if="item.name=='seckill'" :types="7" @editseckill="changeSeckill" active-names="7"
+                             :index="index" :seckill-index="tempid" :seckill-time="item.seckillTime">
+                    </seckill>
+                    <!--搜索-->
+                    <search v-if="item.name=='search'" :types="8" @editsearch="changeSearch" :index="index"
+                            :search-index="tempid" active-names="8" :placeholder="item.placeholder">
+                    </search>
+                    <!--图片列表-->
+                    <uuai-img v-if="item.name=='uuai-img'" :types="9" @editimg="changeImg" active-names="9"
+                              :index="index" :img-index="tempid"
+                              :img-radio="item.imgRadio" :unico-upimg="item.unicoUpimg" :many-img="manyImg"
+                              :img-id="imgId" :unico-img="unicoImg" :img-arr="imgArr">
+                    </uuai-img>
+                    <!--优惠券-->
+                    <coupon v-if="item.name=='coupon'" :types="10" @editcoupon="changeCoupon" active-names="10"
+                            :index="index" :coupon-index="tempid"
+                            :coupon-radio="item.couponRadio" :coupon-id="couponId" :coupon="item.coupon">
+                    </coupon>
+                    <!--店铺信息-->
+                    <shopinfo v-if="item.name=='shopinfo'" @editinfo="changeShopInfo" :index="index"
+                              :info-index="tempid" :types="11" active-names="11" :info-radio="item.infoRadio"
+                              :shop-bg="item.shopBg">
+                    </shopinfo>
+                    <!--进入店铺-->
+                    <entershop v-if="item.name=='entershop'" :index="index" :entershop-index="tempid"
+                               @editentershop="changeEntershop" :types="12"
+                               active-names="12" :go-shop="item.goShop">
+                    </entershop>
+                    <!--魔方-->
+                    <photoads v-if="item.name=='photoads'" :index="index" @editphotoads="changePhotoads" :types="13"
+                              active-names="13"
+                              :photoads-index="tempid" :photoads-radio="item.photoadsRadio" :photoadsid="photoadsid">
+                    </photoads>
+                    <!--悬浮窗-->
+                    <suspension v-if="item.name=='suspension'" :index="index" @editsuspension="changeSuspension" :suspension-index="tempid"
+                                 :types="14"  active-names="14" :radio-service="item.radioService" :radio-order="item.radioOrder"
+                                :radio-card="item.radioCard" :radio-gotop="item.radioGotop">
+                    </suspension>
+                </template>
+            </div>
+        </div>
+    </div>
+    <div class="right-content" >
+        <div class="right-content-a">
+            <div>预览</div>
+            <div>保存</div>
+            <div>发布</div>
+        </div>
+        <div class="right-content-b">
+            <div class="right-content-b-title">
+                <div @click="statuea=0" class="right-content-b-title-inner cheakb">组件设置</div>
+            </div>
+            <div v-if='statuea==0'>
+                <!--<div class="right-content-b-nav">文本内容</div>-->
+                <!--*********************-->
+                <el-collapse v-model="activeNames" accordion>
+                    <div v-if="types==1" class="">
+                        <el-collapse-item title="文本组件" name="1">
+                            <el-alert title="位置设置" type="info" :closable="false"></el-alert>
+                            <div class="radioStyle marginStyle">
+                                <el-radio-group v-model="textRadio">
+                                    <el-radio :label="0">居左</el-radio>
+                                    <el-radio :label="1">居中</el-radio>
+                                    <el-radio :label="2">居右</el-radio>
+                                </el-radio-group>
+                            </div>
+                            <el-alert title="文本内容" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-input v-model="textVal"></el-input>
+                            </div>
+                            <el-alert title="颜色背景" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <div class="block">
+                                    <el-tag type="info" style="vertical-align: middle;margin-right: 10px ">背景</el-tag>
+                                    <el-color-picker v-model="textBg" style="vertical-align: middle"></el-color-picker>
+                                    <el-tag type="info" style="vertical-align: middle;margin:0 10px ">字体颜色</el-tag>
+                                    <el-color-picker v-model="fontColor"
+                                                     style="vertical-align: middle">
+                                    </el-color-picker>
+                                </div>
+                            </div>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delText">删除</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==2">
+                        <el-collapse-item title="标题组件" name="2">
+                            <el-alert title="位置设置" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle" style="text-align: center">
+                                <el-radio-group v-model="titleRadio" size="small">
+                                    <el-radio-button label="0">居中</el-radio-button>
+                                    <el-radio-button label="1">居左</el-radio-button>
+                                    <el-radio-button label="2">居左(图)</el-radio-button>
+                                    <el-radio-button label="3">两侧</el-radio-button>
+                                </el-radio-group>
+                            </div>
+                            <el-alert title="文本内容" type="info" :closable="false"></el-alert>
+                            <div class="marginStyle paddingStyle">
+                                <el-input v-model="title" maxlength="6" placeholder="最多6个字符长度"></el-input>
+                            </div>
+                            <div v-if="titleRadio==3" class="marginStyle paddingStyle">
+                                <el-input v-model="seeMore" maxlength="4" placeholder="最多4个字符长度"></el-input>
+                            </div>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delTitle">删除标题</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==3">
+                        <el-collapse-item title="轮播组件" name="3">
+                            <el-alert title="轮播设置" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <div class="autoSwitch">
+                                    <el-tag type="info">自动轮播</el-tag>
+                                    <el-switch v-model="auto" active-color="#13ce66"
+                                               inactive-color="#f1f1f1"></el-switch>
+                                </div>
+                                <el-tag type="info">切换时间</el-tag>
+                                <el-input-number size="mini" v-model="interval" controls-position="right" :min="1"
+                                                 :max="9">
+                                </el-input-number>
+                                <span>单位:秒</span>
+                            </div>
+                            <el-alert title="轮播项" type="info" :closable="false" style="margin-bottom: 10px"></el-alert>
+                            <div class="paddingStyle">
+                                <el-upload
+                                        class="upload-demo"
+                                        action="##"
+                                        :on-preview="handlePreview"
+                                        :on-remove="handleRemove"
+                                        :on-success="uploadImg"
+                                        :limit="4"
+                                        :file-list="fileList2"
+                                        list-type="picture">
+                                    <el-button size="small" type="primary">添加轮播项</el-button>
+                                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                                    <div slot="tip" class="el-upload__tip">最多允许新增4个轮播项</div>
+                                </el-upload>
+                            </div>
+                            <div class="marginStyle paddingStyle">
+                                <el-button type="primary" size="medium" @click="delCarousel">删除轮播</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==4">
+                        <el-collapse-item title="图文导航" name="4">
+                            <el-alert title="上传图片" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle">
+                                <el-upload class="avatar-uploader" v-loading="loading"
+                                           action="##"
+                                           :show-file-list="false"
+                                           :on-progress="handleprogress"
+                                           :on-success="handleAvatarSuccess"
+                                           :before-upload="beforeAvatarUpload">
+                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </div>
+                            <el-alert title="文本内容" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-input v-model="navText" maxlength="4" placeholder="最多四个字符"></el-input>
+                            </div>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delNav">删除分类</el-button>
+                                <el-button type="primary" size="small" @click="categoryAdd">添加分类</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==5">
+                        <el-collapse-item title="公告组件" name="5">
+                            <el-alert
+                                    title="滚动设置"
+                                    type="info" :closable="false">
+                            </el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <template>
+                                    <el-radio v-model="noticeRadio" label="0">上下滚动</el-radio>
+                                    <el-radio v-model="noticeRadio" label="1">左右滚动</el-radio>
+                                </template>
+                            </div>
+                            <el-alert
+                                    title="公告内容"
+                                    type="info" :closable="false">
+                            </el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <template v-for="(item,key) in notice">
+                                    <el-input style="margin-bottom: 10px" :value="item.text"
+                                              @change="changeNewNotice($event,key)">
+                                        <el-button slot="append" icon="el-icon-delete"
+                                                   @click="delNotice(key)"></el-button>
+                                    </el-input>
+                                </template>
+                            </div>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="newNotice">添加公告</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==6">
+                        <el-collapse-item title="列表组件" name="6">
+                            <el-alert title="布局方式" type="info" :closable="false">
+                            </el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-radio-group v-model="listsRadio" size="small">
+                                    <el-radio-button label="0">上下布局</el-radio-button>
+                                    <el-radio-button label="1">左右布局</el-radio-button>
+                                </el-radio-group>
+                            </div>
+                            <el-alert title="组件内容" type="info" :closable="false">
+                            </el-alert>
+                            <div style="box-sizing: border-box;padding: 0 50px 0 20px;display: flex;justify-content: space-between;align-items: center;height: 50px;">
+                                <el-tag>显示销量</el-tag>
+                                <el-switch v-model="listsValue" active-color="#13ce66"
+                                           inactive-color="#ccc"></el-switch>
+                            </div>
+                            <div style="box-sizing: border-box;padding: 0 50px 0 20px;display: flex;justify-content: space-between;align-items: center;height: 50px;">
+                                <el-tag>显示虚拟价格</el-tag>
+                                <el-switch v-model="listsPrice" active-color="#13ce66"
+                                           inactive-color="#ccc"></el-switch>
+                            </div>
+                            <div v-show="listsRadio==0"
+                                 style="box-sizing: border-box;padding: 0 50px 0 20px;display: flex;justify-content: space-between;align-items: center;height: 50px;">
+                                <el-tag>显示购物车按钮</el-tag>
+                                <el-switch v-model="listsCart" active-color="#13ce66"
+                                           inactive-color="#ccc"></el-switch>
+                            </div>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delList">删除列表</el-button>
+                            </div>
+
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==7">
+                        <el-collapse-item title="秒杀组件" name="7">
+                            <el-alert title="组件设置" type="info" :closable="false">
+                            </el-alert>
+                            <div style="box-sizing: border-box;padding: 0 50px 0 20px;display: flex;justify-content: space-between;align-items: center;height: 50px;">
+                                <el-tag>显示倒计时</el-tag>
+                                <el-switch v-model="seckillTime" active-color="#13ce66"
+                                           inactive-color="#ccc"></el-switch>
+                            </div>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delSeckill">删除秒杀</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==8">
+                        <el-collapse-item title="搜索组件" name="8">
+                            <el-alert title="组件设置" type="info" :closable="false">
+                            </el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-tag type="info">提示语</el-tag>
+                            </div>
+                            <div class="paddingStyle marginStyle">
+                                <el-input v-model="placeholder"></el-input>
+                            </div>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delSearch">删除</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==9">
+                        <el-collapse-item title="图片组件" name="9">
+                            <el-alert title="列表样式" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-radio-group v-model="imgRadio">
+                                    <el-radio label="1">单图</el-radio>
+                                    <el-radio label="2">多图</el-radio>
+                                </el-radio-group>
+                            </div>
+                            <el-alert title="图片列表" type="info" :closable="false"></el-alert>
+
+                            <div v-if="imgRadio==1" class="paddingStyle">
+                                <span style="color: #999;font-size: 12px;">图片建议宽度750像素</span>
+                                <el-upload class="avatar-uploader" v-loading="loading2"
+                                           action="##"
+                                           :show-file-list="false"
+                                           :on-progress="handleprogress2"
+                                           :on-success="handleAvatarSuccess2"
+                                           :before-upload="beforeAvatarUpload2">
+                                    <img v-if="unicoUpimg" :src="unicoUpimg" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </div>
+                            <div v-if="imgRadio==2" class="paddingStyle">
+                                <div v-for="(item,index) in imgArr">
+                                    <el-collapse v-model="activeName2" accordion @change="getIndex">
+                                        <el-collapse-item :title="'图片项'+(index+'1'*1)" :name="index">
+                                            <div style="display: flex;">
+                                                <span style="width: 70px;margin-top: 10px">图片：</span>
+                                                <el-upload
+                                                        class="avatar-uploader"
+                                                        action="##"
+                                                        :show-file-list="false"
+                                                        :on-success="handleAvatarSuccess3"
+                                                        :before-upload="beforeAvatarUpload2">
+                                                    <img v-if="item.url" :src="item.url" class="avatar">
+                                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                                </el-upload>
+                                            </div>
+                                            <div style="display: flex;align-items: center">
+                                                <span style="width: 70px;">标题：</span>
+                                                <el-input v-model="item.des"
+                                                          @change="changeDes($event,index)"></el-input>
+                                            </div>
+                                        </el-collapse-item>
+                                    </el-collapse>
+                                </div>
+                            </div>
+                            <el-alert title="操作" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delImgs">删除</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==10">
+                        <el-collapse-item title="优惠券组件" name="10">
+                            <el-alert title="样式类型" type="info" :closable="false"></el-alert>
+                            <div class="marginStyle paddingStyle">
+                                <el-radio-group v-model="couponRadio" size="small">
+                                    <el-radio-button label="1">类型1</el-radio-button>
+                                    <el-radio-button label="2">类型2</el-radio-button>
+                                    <el-radio-button label="3">类型3</el-radio-button>
+                                </el-radio-group>
+                            </div>
+                            <el-alert v-if="couponRadio==2" title="编辑内容" type="info" :closable="false"></el-alert>
+                            <div v-if="couponRadio==2" class="marginStyle paddingStyle">
+                                <div v-for="(item,index) in couponArr">
+                                    <el-collapse v-model="activeName2" accordion>
+                                        <el-collapse-item :title="'优惠券'+(index+'1'*1)" :name="index">
+                                            <div style="display: flex;align-items: center;margin-bottom: 15px">
+                                                <span style="width: 70px;">面值：</span>
+                                                <el-input :value="item.faceValue" placeholder="优惠券面值"
+                                                          @change="changefaceValue($event,index)"></el-input>
+                                            </div>
+                                            <div style="display: flex;align-items: center;margin-bottom: 15px">
+                                                <span style="width: 70px;">满劵：</span>
+                                                <el-input :value="item.full" placeholder="满多少"
+                                                          @change="changefull($event,index)"></el-input>
+                                            </div>
+                                            <div style="display: flex;align-items: center;margin-bottom: 15px">
+                                                <span style="width: 70px;">减价：</span>
+                                                <el-input :value="item.reduce" placeholder="减价"
+                                                          @change="changereduce($event,index)"></el-input>
+                                            </div>
+                                            <div style="display: flex;align-items: center;margin-bottom: 15px">
+                                                <span style="width: 70px;">有效期：</span>
+                                                <el-input :value="item.effective" placeholder="优惠券有效期"
+                                                          @change="changeeffective($event,index)"></el-input>
+                                            </div>
+                                        </el-collapse-item>
+                                    </el-collapse>
+                                </div>
+                            </div>
+                            <el-alert title="操作" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delCoupon">删除</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==11">
+                        <el-collapse-item title="店铺组件" name="11">
+                            <el-alert title="样式类型" type="info" :closable="false"></el-alert>
+                            <div class="marginStyle paddingStyle">
+                                <el-radio-group v-model="infoRadio" size="small">
+                                    <el-radio-button label="1">样式1</el-radio-button>
+                                    <el-radio-button label="2">样式2</el-radio-button>
+                                </el-radio-group>
+                            </div>
+                            <el-alert title="背景图设置" type="info" :closable="false"></el-alert>
+                            <span class="tip">上传图片大小不能超过 2MB!</span>
+                            <div class="paddingStyle" style="display: flex;">
+                                <span style="margin:10px 10px 0 0">背景图：</span>
+                                <el-upload
+                                        class="avatar-uploader"
+                                        action="##"
+                                        :show-file-list="false"
+                                        :on-success="shopInfoSuccess"
+                                        :before-upload="shopInfoUpload">
+                                    <img v-if="shopBg" :src="shopBg" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </div>
+                            <el-alert title="操作" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delShopInfo">删除</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==12">
+                        <el-collapse-item title="进入店铺" name="12">
+                            <el-alert title="进入店铺" type="info" :closable="false"></el-alert>
+                            <div class="marginStyle paddingStyle" style="display: flex;align-items: center">
+                                <span style="display: inline-block;width: 70px;">文案：</span>
+                                <el-input v-model="goShop"></el-input>
+                            </div>
+                            <el-alert title="操作" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delEnterShop">删除</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==13">
+                        <el-collapse-item title="魔方组件" name="13">
+                            <el-alert title="类型选择" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-radio-group v-model="photoadsRadio" size="small" @change="changePhotoadsRadio">
+                                    <el-radio-button label="1">类型1</el-radio-button>
+                                    <el-radio-button label="2">类型2</el-radio-button>
+                                    <el-radio-button label="3">类型3</el-radio-button>
+                                </el-radio-group>
+                            </div>
+                            <el-alert title="图片组" type="info" :closable="false"></el-alert>
+                            <div v-for="(item,index) in photoadsArr">
+                                <el-collapse v-model="activeName2" accordion @change="getPhotoadsIndex">
+                                    <el-collapse-item :title="'图片项'+(index+'1'*1)" :name="index">
+                                        <div style="display: flex;" class="paddingStyle">
+                                            <span style="width: 70px;margin-top: 10px">图片：</span>
+                                            <el-upload
+                                                    class="avatar-uploader"
+                                                    action="##"
+                                                    :show-file-list="false"
+                                                    :on-success="photoadsSuccess"
+                                                    :before-upload="photoadsUpload">
+                                                <img v-if="item.src" :src="item.src" class="avatar">
+                                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                            </el-upload>
+                                        </div>
+                                        <div v-if="photoadsRadio !=1 ">
+                                            <div class="paddingStyle"
+                                                 style="display: flex;align-items: center;margin-bottom: 10px">
+                                                <span style="width: 70px;">文本：</span>
+                                                <el-input v-model="item.des1"
+                                                          @change="changePhotoadsDes1($event,index)"></el-input>
+                                            </div>
+                                            <div class="paddingStyle" style="display: flex;align-items: center">
+                                                <span style="width: 70px;">文本：</span>
+                                                <el-input v-model="item.des2"
+                                                          @change="changePhotoadsDes2($event,index)"></el-input>
+                                            </div>
+                                        </div>
+                                    </el-collapse-item>
+                                </el-collapse>
+                            </div>
+                            <el-alert title="操作" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delPhotoads">删除</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                    <div v-if="types==14">
+                        <el-collapse-item title="悬浮窗" name="14">
+                            <el-alert title="编辑" type="info" :closable="false"></el-alert>
+                            <div class="marginStyle paddingStyle" style="display: flex;align-items: center">
+                                <span style="display: inline-block;width: 90px;">客服服务：</span>
+                                <el-switch
+                                        v-model="radioService"
+                                        active-color="#13ce66"
+                                        inactive-color="#f1f1f1">
+                                </el-switch>
+                            </div>
+                            <div class="marginStyle paddingStyle" style="display: flex;align-items: center">
+                                <span style="display: inline-block;width: 90px;">订单：</span>
+                                <el-switch
+                                        v-model="radioOrder"
+                                        active-color="#13ce66"
+                                        inactive-color="#f1f1f1">
+                                </el-switch>
+                            </div>
+                            <div class="marginStyle paddingStyle" style="display: flex;align-items: center">
+                                <span style="display: inline-block;width: 90px;">购物车：</span>
+                                <el-switch
+                                        v-model="radioCard"
+                                        active-color="#13ce66"
+                                        inactive-color="#f1f1f1">
+                                </el-switch>
+                            </div>
+                            <div class="marginStyle paddingStyle" style="display: flex;align-items: center">
+                                <span style="display: inline-block;width: 90px;">返回顶部：</span>
+                                <el-switch
+                                        v-model="radioGotop"
+                                        active-color="#13ce66"
+                                        inactive-color="#f1f1f1">
+                                </el-switch>
+                            </div>
+                            <el-alert title="操作" type="info" :closable="false"></el-alert>
+                            <div class="paddingStyle marginStyle">
+                                <el-button type="primary" size="small" @click="delSuspension">删除</el-button>
+                            </div>
+                        </el-collapse-item>
+                    </div>
+                </el-collapse>
+                <!--*********************-->
+
+
+                <div style="display: none;">
+                    <div class="right-content-b-input">
+                        <textarea v-model="message"></textarea>
+                    </div>
+                    <div class="right-content-b-nav">字体样式</div>
+                    <div class="right-content-b-edit">
+                        <div class="right-content-b-edit-font">
+                            <input id="fontSizeValue" class="right-content-b-edit-font-input" type="tel" value="12"/>
+                            <div class="right-content-b-edit-font-change">
+                                <div id="fontSizeUP">
+                                    <i class="layui-icon">&#xe625;</i>
+                                </div>
+                                <div id="fontSizeDowm">
+                                    <i class="layui-icon">&#xe625;</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right-content-b-edit-style">
+                            <i class="layui-icon">&#xe62b;</i>
+                        </div>
+                        <div class="right-content-b-edit-style">
+                            <i class="layui-icon">&#xe644;</i>
+                        </div>
+                        <div class="right-content-b-edit-style">
+                            <i class="layui-icon">&#xe646;</i>
+                        </div>
+                        <div id="right-content-b-edit-color"></div>
+                        <div class="right-content-b-edit-align">
+                            <select name="">
+                                <option>对齐方式</option>
+                                <option value="0">左对齐</option>
+                                <option value="1">右对齐</option>
+                                <option value="2">居中对齐</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="right-content-b-nav">点击事件</div>
+                    <div id="setClick" class="right-content-b-set">设置点击事件</div>
+                </div>
+            </div>
+            <div v-if='false'>
+                <div @click="statueb=!statueb" class="right-content-b-nav">
+                    <span>组件设置</span>
+                    <i v-if="statueb==false" class="layui-icon layui-icon-triangle-r"></i>
+                    <i v-if="statueb==true" class="layui-icon layui-icon-triangle-d"></i>
+                </div>
+                <div class="right-content-b-">
+                    <div class="">
+                        <div>大小</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--设置点击事件弹出框-->
+<div class="setClickbox">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">页面</li>
+            <li>详情</li>
+            <li>营销</li>
+            <li>功能</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div style="box-sizing: border-box;padding-top: 50px;">
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item" style="margin: auto;">
+                            <label class="layui-form-label" style="width: 100px;">选择跳转页面</label>
+                            <div class="layui-input-block" style="margin-left: 130px;width: 300px;">
+                                <select name="city" lay-verify="required">
+                                    <option value=""></option>
+                                    <option value="0">首页</option>
+                                    <option value="1">商品分类</option>
+                                    <option value="2">商品详情</option>
+                                    <option value="3">订单管理</option>
+                                    <option value="4">个人中心</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="layui-tab-item">2</div>
+            <div class="layui-tab-item">3</div>
+            <div class="layui-tab-item">4</div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/vue2.5.16.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script src="js/data.js"></script>
+<script src="components/components.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+
+</html>

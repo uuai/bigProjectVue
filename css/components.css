@@ -1,0 +1,283 @@
+/*轮播*/
+.el-collapse {
+    width: 100%;
+    height: 100%;
+    background: #F4F4FA;
+    box-sizing: border-box;
+}
+
+.autoSwitch {
+    margin-bottom: 10px;
+}
+
+.carouselImg {
+    width: 100%;
+    height: 100%;
+    display:  block;
+}
+
+/*导航*/
+.nav-home {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.nav-li {
+    box-sizing: border-box;
+    width: 25%;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.navImg {
+    width: 50px;
+    height: 50px;
+    margin: 5px auto;
+}
+
+.navImg img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+/*图片上传*/
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 80px;
+    height: 80px;
+    line-height: 80px !important;
+    text-align: center;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    display: block;
+}
+
+/*标题*/
+.title-wrap {
+    width: 100%;
+    border-bottom: 1px solid #f1f1f1;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.titleText {
+    margin: 0 10px;
+    font-size: 13px;
+}
+
+.title-one-img {
+    display: inline-block;
+    width: 20px;
+    vertical-align: middle;
+}
+
+.title-wrap2 {
+    width: 100%;
+    border-bottom: 1px solid #f1f1f1;
+    height: 40px;
+    line-height: 40px;
+}
+
+.titleBorder {
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+.title-wrap3 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid #f1f1f1;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
+}
+
+.titleText2 {
+    font-weight: 600;
+}
+
+.seeMore {
+    font-size: 13px;
+    position: relative;
+    padding-right: 10px;
+}
+
+.seeMore:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #ccc;
+    border-right: 2px solid #ccc;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+/*公告*/
+.noticeWrap {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 10px;
+    width: 100%;
+    height: 40px;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.notice-label {
+    width: 60px;
+    height: 40px;
+    line-height: 40px;
+    font-weight: 600;
+}
+
+.notice-box {
+    width: 100%;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.notice-ul {
+    width: 100%;
+    flex: 1;
+    line-height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.amin {
+    transition: top 0.5s linear;
+}
+
+.noticeWrap2 {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 10px;
+    width: 100%;
+    height: 40px;
+    font-size: 13px;
+
+}
+
+.notice-label2 {
+    width: 60px;
+    height: 40px;
+    box-sizing: border-box;
+    background: #fff;
+    line-height: 40px;
+    font-weight: 600;
+}
+
+.notice-box2 {
+    width: 100%;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.notice-ul2 {
+    flex: 1;
+    width: 100%;
+    line-height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 6s linear;
+}
+
+.notice-li2 {
+    height: 40px;
+    line-height: 40px;
+}
+
+.notice-li, notice-li2 {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/*文本*/
+.template-text {
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    box-sizing: border-box;
+    padding: 0 10px;
+    font-size: 13px;
+}
+.textCenter {
+    text-align: center;
+}
+
+.textLeft {
+    text-align: left;
+}
+
+.textRight {
+    text-align: right;
+}
+
+.radioStyle{
+    text-align: center;
+}
+.paddingStyle{
+    padding: 0 10px
+}
+.marginStyle{
+    margin: 15px 0
+}
+.border{
+    box-shadow: 0 0 3px #409EFF;
+    border:1px solid #409EFF;
+}
+.tip {
+    display: inline-block;
+    box-sizing: border-box;
+    margin:10px;
+    font-size: 12px;
+    color: #999;
+}
+
+.color{
+    border:1px solid red;
+}
